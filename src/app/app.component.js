@@ -6,21 +6,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require("@angular/core");
-var Family = (function () {
-    function Family() {
-    }
-    return Family;
-}());
-exports.Family = Family;
-var Animal = (function () {
-    function Animal() {
-    }
-    return Animal;
-}());
-exports.Animal = Animal;
 var AppComponent = (function () {
     function AppComponent() {
-        this.name = 'Animals';
+        this.globalList = 'Global List';
+        this.families = [
+            { id: 1, name: 'Dogs', diet: 'Meat', noise: 'Guau',
+                ability: 'Playing with balls' },
+            { id: 2, name: 'Cats', diet: 'Milk', noise: 'Miau',
+                ability: 'Lazy in the couch all day' },
+            { id: 3, name: 'Birds', diet: 'Seed', noise: 'Sing',
+                ability: 'Sing' },
+        ];
         this.animals = [
             { id: '11', name: 'Bobby' },
             { id: '12', name: 'Toby' },
@@ -28,20 +24,13 @@ var AppComponent = (function () {
             { id: '14', name: 'Zipper' },
             { id: '15', name: 'Walker' },
         ];
-        this.family = {
-            id: 1,
-            name: 'Dogs',
-            diet: 'Meat',
-            noise: 'guau',
-            ability: 'playing with balls'
-        };
     }
     return AppComponent;
 }());
 AppComponent = __decorate([
     core_1.Component({
         selector: 'my-app',
-        template: "<h1>{{name}}</h1>\n            <ul class=\"animals\">\n                <li *ngFor=\"let animal of animals\" >\n                    <span class=\"badge\">{{animal.id}}</span> {{animal.name}}\n                </li>\n            </ul>",
+        template: "<h1>{{globalList}}</h1>\n            <ul class=\"animals\">\n                <li *ngFor=\"let family of families\" >\n                    <span class=\"badge\">{{family.id}}</span> {{family.name}}\n                    eat {{family.diet}} and there are {{families.length}}\n                </li>\n            </ul>",
     })
 ], AppComponent);
 exports.AppComponent = AppComponent;
