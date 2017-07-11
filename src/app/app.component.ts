@@ -3,6 +3,15 @@ import { GlobalFamily } from './global-family';
 import { Animal } from './animal';
 import {  Component, ChangeDetectionStrategy } from '@angular/core';
 
+const FAMILIES: GlobalFamily[] = [
+  {id: 1, name: 'Dogs', diet: 'Meat', noise: 'Guau',
+      ability: 'Playing with balls'},
+  {id: 2, name: 'Cats', diet: 'Milk', noise: 'Miau',
+      ability: 'Lazy in the couch all day'},
+  {id: 3, name: 'Birds', diet: 'Seed', noise: 'Sing',
+      ability: 'Sing'}
+];
+
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'my-app',
@@ -12,14 +21,21 @@ import {  Component, ChangeDetectionStrategy } from '@angular/core';
             <ul class="animals">
                 <li *ngFor="let family of families">
                     <span class="badge">{{family.id}}</span> {{family.name}}
-                    eat {{family.diet}} and there are {{this.getAmount(family)}}
+                    eat {{family.diet}} and there are {{getAmount(family)}}
                 </li>
             </ul>
+            <h3><li (click)="addNew()">Add new...</li></h3>
+            <div *ngIf="new">
+                <div>
+                    <label>Name: </label>
+                    <input [(ngModel)]="families[newElement].name" placeholder="name">
+                </div>
+            </div>
             </div>
             <h1 (click)="showGlobalList(false)">{{specificList}}</h1>
             <div *ngIf="globalOrSpecific === false">
                 <li *ngFor="let family of families">
-                {{this.getAnimals(family)}}
+                {{getAnimals(family)}}
                 <h2>{{family.name}}</h2>
                     <ul class="animals">
                         <li *ngFor="let animal of animalsOfFamily">
@@ -31,6 +47,7 @@ import {  Component, ChangeDetectionStrategy } from '@angular/core';
 })
 
 export class AppComponent  {
+    new = false;
     globalList = 'Global List';
     families: GlobalFamily[] = [
       {id: 1, name: 'Dogs', diet: 'Meat', noise: 'Guau',
@@ -40,6 +57,7 @@ export class AppComponent  {
       {id: 3, name: 'Birds', diet: 'Seed', noise: 'Sing',
           ability: 'Sing'},
     ];
+    newFamily: families[families.length-1];
     specificList = 'Specific List';
     animals: Animal[] = [
       {id: '11', name: 'Bobby', age: 6, family: this.families[0]},
@@ -63,9 +81,9 @@ export class AppComponent  {
                 members.push(a);
             }
         });
-        this.animalsOfFamily = members;
         console.log(members);
         console.log(this.animalsOfFamily);
+        this.animalsOfFamily = members;
     }
 
     getAmount(family: GlobalFamily): int {
@@ -76,5 +94,16 @@ export class AppComponent  {
             }
         });
         return amount;
+    }
+
+    addNew(): void {
+        this.new = true;
+        this.families.push(new GlobalFamily());
+        this.newElement = this.countElements()-1;
+        console.log(this.newElement);
+    }
+
+    countElements(): int {
+        return this.families.length;
     }
 }
