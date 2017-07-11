@@ -7,7 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var core_1 = require("@angular/core");
 var global_family_1 = require("./global-family");
-var core_2 = require("@angular/core");
 var FAMILIES = [
     { id: 1, name: 'Dogs', diet: 'Meat', noise: 'Guau',
         ability: 'Playing with balls' },
@@ -72,13 +71,15 @@ var AppComponent = (function () {
     AppComponent.prototype.countElements = function () {
         return this.families.length;
     };
+    AppComponent.prototype.onSelect = function (family) {
+        this.selectedFamily = family;
+    };
     return AppComponent;
 }());
 AppComponent = __decorate([
     core_1.Component({
-        changeDetection: core_2.ChangeDetectionStrategy.OnPush,
         selector: 'my-app',
-        template: "\n          <h1 (click)=\"showGlobalList(true)\">{{globalList}}</h1>\n            <div *ngIf=\"globalOrSpecific === true\">\n            <ul class=\"animals\">\n                <li *ngFor=\"let family of families\">\n                    <span class=\"badge\">{{family.id}}</span> {{family.name}}\n                    eat {{family.diet}} and there are {{getAmount(family)}}\n                </li>\n            </ul>\n            <h3><li (click)=\"addNew()\">Add new...</li></h3>\n            <div *ngIf=\"new\">\n                <div>\n                    <label>Name: </label>\n                    <input [(ngModel)]=\"families[newElement].name\" placeholder=\"name\">\n                </div>\n            </div>\n            </div>\n            <h1 (click)=\"showGlobalList(false)\">{{specificList}}</h1>\n            <div *ngIf=\"globalOrSpecific === false\">\n                <li *ngFor=\"let family of families\">\n                {{getAnimals(family)}}\n                <h2>{{family.name}}</h2>\n                    <ul class=\"animals\">\n                        <li *ngFor=\"let animal of animalsOfFamily\">\n                            <span class=\"badge\">{{animal.id}}</span> {{animal.name}} is {{animal.age}}\n                        </li>\n                    </ul>\n                </li>\n            </div>",
+        template: "\n          <h1 (click)=\"showGlobalList(true)\">{{globalList}}</h1>\n            <div *ngIf=\"globalOrSpecific === true\">\n            <ul class=\"animals\">\n                <li *ngFor=\"let family of families\">\n                    <span class=\"badge\">{{family.id}}</span> {{family.name}}\n                    eat {{family.diet}} and there are {{getAmount(family)}}\n                </li>\n            </ul>\n            <h3><li (click)=\"addNew()\">Add new...</li></h3>\n            <div *ngIf=\"new\">\n                <div>\n                    <label>Name: </label>\n                    <input [(ngModel)]=\"families[newElement].name\" placeholder=\"name\">\n                </div>\n                <div>\n                    <label>Diet: </label>\n                    <input [(ngModel)]=\"families[newElement].diet\" placeholder=\"diet\">\n                </div>\n                <div>\n                    <label>Noise: </label>\n                    <input [(ngModel)]=\"families[newElement].noise\" placeholder=\"noise\">\n                </div>\n                <div>\n                    <label>Ability: </label>\n                    <input [(ngModel)]=\"families[newElement].ability\" placeholder=\"ability\">\n                </div>\n            </div>\n            </div>\n            <h1 (click)=\"showGlobalList(false)\">{{specificList}}</h1>\n            <div *ngIf=\"globalOrSpecific === false\">\n                <li *ngFor=\"let family of families\" (click)=\"onSelect(family)\">\n                {{getAnimals(family)}}\n                <h2>{{family.name}}</h2>\n                    <div *ngIf=\"selectedFamily === family\">\n                      <ul class=\"animals\">\n                        <li *ngFor=\"let animal of animalsOfFamily\">\n                            <span class=\"badge\">{{animal.id}}</span> {{animal.name}} is {{animal.age}}\n                        </li>\n                      </ul>\n                    </div>\n                </li>\n            </div>",
     })
 ], AppComponent);
 exports.AppComponent = AppComponent;

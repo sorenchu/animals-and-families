@@ -13,7 +13,6 @@ const FAMILIES: GlobalFamily[] = [
 ];
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'my-app',
   template: `
           <h1 (click)="showGlobalList(true)">{{globalList}}</h1>
@@ -30,18 +29,32 @@ const FAMILIES: GlobalFamily[] = [
                     <label>Name: </label>
                     <input [(ngModel)]="families[newElement].name" placeholder="name">
                 </div>
+                <div>
+                    <label>Diet: </label>
+                    <input [(ngModel)]="families[newElement].diet" placeholder="diet">
+                </div>
+                <div>
+                    <label>Noise: </label>
+                    <input [(ngModel)]="families[newElement].noise" placeholder="noise">
+                </div>
+                <div>
+                    <label>Ability: </label>
+                    <input [(ngModel)]="families[newElement].ability" placeholder="ability">
+                </div>
             </div>
             </div>
             <h1 (click)="showGlobalList(false)">{{specificList}}</h1>
             <div *ngIf="globalOrSpecific === false">
-                <li *ngFor="let family of families">
+                <li *ngFor="let family of families" (click)="onSelect(family)">
                 {{getAnimals(family)}}
                 <h2>{{family.name}}</h2>
-                    <ul class="animals">
+                    <div *ngIf="selectedFamily === family">
+                      <ul class="animals">
                         <li *ngFor="let animal of animalsOfFamily">
                             <span class="badge">{{animal.id}}</span> {{animal.name}} is {{animal.age}}
                         </li>
-                    </ul>
+                      </ul>
+                    </div>
                 </li>
             </div>`,
 })
@@ -105,5 +118,9 @@ export class AppComponent  {
 
     countElements(): int {
         return this.families.length;
+    }
+
+    onSelect(family: GlobalFamily): void {
+        this.selectedFamily = family;
     }
 }
