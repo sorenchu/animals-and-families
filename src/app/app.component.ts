@@ -60,6 +60,9 @@ const FAMILIES: GlobalFamily[] = [
                         <li *ngFor="let animal of family.members">
                             <span class="badge">{{animal.id}}</span>
                                 {{animal.name}} is {{animal.age}}
+                            <button (click)="remove(animal)">
+                                Remove
+                            </button>
                         </li>
                       </ul>
                     </div>
@@ -123,5 +126,19 @@ export class AppComponent  {
 
     onSelect(family: GlobalFamily): void {
         this.selectedFamily = family;
+    }
+
+    remove(animal: Animal): void {
+        var elementToDelete = -1;
+        var counter = 0;
+        this.animals.forEach(function(a) {
+            if (animal === a) {
+                elementToDelete = counter
+            }
+            counter++;
+        });
+        if (elementToDelete !== -1) {
+            this.animals.splice(elementToDelete, 1);
+        }
     }
 }

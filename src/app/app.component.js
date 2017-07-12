@@ -68,12 +68,25 @@ var AppComponent = (function () {
     AppComponent.prototype.onSelect = function (family) {
         this.selectedFamily = family;
     };
+    AppComponent.prototype.remove = function (animal) {
+        var elementToDelete = -1;
+        var counter = 0;
+        this.animals.forEach(function (a) {
+            if (animal === a) {
+                elementToDelete = counter;
+            }
+            counter++;
+        });
+        if (elementToDelete !== -1) {
+            this.animals.splice(elementToDelete, 1);
+        }
+    };
     return AppComponent;
 }());
 AppComponent = __decorate([
     core_1.Component({
         selector: 'my-app',
-        template: "\n          <li *ngFor=\"let family of families\">\n              {{getAnimals(family)}}\n          </li>\n          <h1 (click)=\"showGlobalList(true)\">{{globalList}}</h1>\n            <div *ngIf=\"globalOrSpecific === true\">\n            <ul class=\"animals\">\n                <li *ngFor=\"let family of families\">\n                    <span class=\"badge\">{{family.name}}</span>\n                        eat {{family.diet}} and\n                        there are {{family.members.length}}\n                </li>\n            </ul>\n            <h3><li (click)=\"addNew()\">Add new...</li></h3>\n            <div *ngIf=\"new\">\n                <div>\n                    <label>Name: </label>\n                    <input [(ngModel)]=\"families[newElement].name\"\n                          placeholder=\"name\">\n                </div>\n                <div>\n                    <label>Diet: </label>\n                    <input [(ngModel)]=\"families[newElement].diet\"\n                          placeholder=\"diet\">\n                </div>\n                <div>\n                    <label>Noise: </label>\n                    <input [(ngModel)]=\"families[newElement].noise\"\n                          placeholder=\"noise\">\n                </div>\n                <div>\n                    <label>Ability: </label>\n                    <input [(ngModel)]=\"families[newElement].ability\"\n                          placeholder=\"ability\">\n                </div>\n            </div>\n            </div>\n            <h1 (click)=\"showGlobalList(false)\">{{specificList}}</h1>\n            <div *ngIf=\"globalOrSpecific === false\">\n                <li *ngFor=\"let family of families\" (click)=\"onSelect(family)\">\n                <h2>{{family.name}}</h2>\n                    <div *ngIf=\"selectedFamily === family\">\n                      <ul class=\"animals\">\n                        <li *ngFor=\"let animal of family.members\">\n                            <span class=\"badge\">{{animal.id}}</span>\n                                {{animal.name}} is {{animal.age}}\n                        </li>\n                      </ul>\n                    </div>\n                </li>\n            </div>",
+        template: "\n          <li *ngFor=\"let family of families\">\n              {{getAnimals(family)}}\n          </li>\n          <h1 (click)=\"showGlobalList(true)\">{{globalList}}</h1>\n            <div *ngIf=\"globalOrSpecific === true\">\n            <ul class=\"animals\">\n                <li *ngFor=\"let family of families\">\n                    <span class=\"badge\">{{family.name}}</span>\n                        eat {{family.diet}} and\n                        there are {{family.members.length}}\n                </li>\n            </ul>\n            <h3><li (click)=\"addNew()\">Add new...</li></h3>\n            <div *ngIf=\"new\">\n                <div>\n                    <label>Name: </label>\n                    <input [(ngModel)]=\"families[newElement].name\"\n                          placeholder=\"name\">\n                </div>\n                <div>\n                    <label>Diet: </label>\n                    <input [(ngModel)]=\"families[newElement].diet\"\n                          placeholder=\"diet\">\n                </div>\n                <div>\n                    <label>Noise: </label>\n                    <input [(ngModel)]=\"families[newElement].noise\"\n                          placeholder=\"noise\">\n                </div>\n                <div>\n                    <label>Ability: </label>\n                    <input [(ngModel)]=\"families[newElement].ability\"\n                          placeholder=\"ability\">\n                </div>\n            </div>\n            </div>\n            <h1 (click)=\"showGlobalList(false)\">{{specificList}}</h1>\n            <div *ngIf=\"globalOrSpecific === false\">\n                <li *ngFor=\"let family of families\" (click)=\"onSelect(family)\">\n                <h2>{{family.name}}</h2>\n                    <div *ngIf=\"selectedFamily === family\">\n                      <ul class=\"animals\">\n                        <li *ngFor=\"let animal of family.members\">\n                            <span class=\"badge\">{{animal.id}}</span>\n                                {{animal.name}} is {{animal.age}}\n                            <button (click)=\"remove(animal)\">\n                                Remove\n                            </button>\n                        </li>\n                      </ul>\n                    </div>\n                </li>\n            </div>",
     })
 ], AppComponent);
 exports.AppComponent = AppComponent;
