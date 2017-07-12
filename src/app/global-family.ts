@@ -4,4 +4,5 @@ export class GlobalFamily {
     diet: string;
     noise: string;
     ability: string;
+    members: Animal[];
 }

@@ -15,43 +15,51 @@ const FAMILIES: GlobalFamily[] = [
 @Component({
   selector: 'my-app',
   template: `
+          <li *ngFor="let family of families">
+              {{getAnimals(family)}}
+          </li>
           <h1 (click)="showGlobalList(true)">{{globalList}}</h1>
             <div *ngIf="globalOrSpecific === true">
             <ul class="animals">
                 <li *ngFor="let family of families">
-                    <span class="badge">{{family.id}}</span> {{family.name}}
-                    eat {{family.diet}} and there are {{getAmount(family)}}
+                    <span class="badge">{{family.name}}</span>
+                        eat {{family.diet}} and
+                        there are {{family.members.length}}
                 </li>
             </ul>
             <h3><li (click)="addNew()">Add new...</li></h3>
             <div *ngIf="new">
                 <div>
                     <label>Name: </label>
-                    <input [(ngModel)]="families[newElement].name" placeholder="name">
+                    <input [(ngModel)]="families[newElement].name"
+                          placeholder="name">
                 </div>
                 <div>
                     <label>Diet: </label>
-                    <input [(ngModel)]="families[newElement].diet" placeholder="diet">
+                    <input [(ngModel)]="families[newElement].diet"
+                          placeholder="diet">
                 </div>
                 <div>
                     <label>Noise: </label>
-                    <input [(ngModel)]="families[newElement].noise" placeholder="noise">
+                    <input [(ngModel)]="families[newElement].noise"
+                          placeholder="noise">
                 </div>
                 <div>
                     <label>Ability: </label>
-                    <input [(ngModel)]="families[newElement].ability" placeholder="ability">
+                    <input [(ngModel)]="families[newElement].ability"
+                          placeholder="ability">
                 </div>
             </div>
             </div>
             <h1 (click)="showGlobalList(false)">{{specificList}}</h1>
             <div *ngIf="globalOrSpecific === false">
                 <li *ngFor="let family of families" (click)="onSelect(family)">
-                {{getAnimals(family)}}
                 <h2>{{family.name}}</h2>
                     <div *ngIf="selectedFamily === family">
                       <ul class="animals">
-                        <li *ngFor="let animal of animalsOfFamily">
-                            <span class="badge">{{animal.id}}</span> {{animal.name}} is {{animal.age}}
+                        <li *ngFor="let animal of family.members">
+                            <span class="badge">{{animal.id}}</span>
+                                {{animal.name}} is {{animal.age}}
                         </li>
                       </ul>
                     </div>
@@ -63,21 +71,21 @@ export class AppComponent  {
     new = false;
     globalList = 'Global List';
     families: GlobalFamily[] = [
-      {id: 1, name: 'Dogs', diet: 'Meat', noise: 'Guau',
-          ability: 'Playing with balls'},
-      {id: 2, name: 'Cats', diet: 'Milk', noise: 'Miau',
-          ability: 'Lazy in the couch all day'},
-      {id: 3, name: 'Birds', diet: 'Seed', noise: 'Sing',
-          ability: 'Sing'},
+      {name: 'Dogs', diet: 'Meat', noise: 'Guau',
+          ability: 'Playing with balls', members:[]},
+      {name: 'Cats', diet: 'Milk', noise: 'Miau',
+          ability: 'Lazy in the couch all day', members:[]},
+      {name: 'Birds', diet: 'Seed', noise: 'Sing',
+          ability: 'Sing', members:[]},
     ];
     newFamily: families[families.length-1];
     specificList = 'Specific List';
     animals: Animal[] = [
-      {id: '11', name: 'Bobby', age: 6, family: this.families[0]},
-      {id: '12', name: 'Toby', age: 24, family: this.families[2]},
-      {id: '13', name: 'Speaker', age:2, family: this.families[2]},
-      {id: '14', name: 'Zipper', age: 11, family: this.families[1]},
-      {id: '15', name: 'Walker', age: 8, family: this.families[0]},
+      {id: '11', name: 'Bobby', age: 6, family: 'Dogs'},
+      {id: '12', name: 'Toby', age: 24, family: 'Birds'},
+      {id: '13', name: 'Speaker', age:2, family: 'Birds'},
+      {id: '14', name: 'Zipper', age: 11, family: 'Cats'},
+      {id: '15', name: 'Walker', age: 8, family: 'Dogs'},
     ];
     selectedFamily: GlobalFamily;
     animalsOfFamily: Animal[];
@@ -87,36 +95,29 @@ export class AppComponent  {
     }
 
     getAnimals(family: GlobalFamily): void {
-        console.log(family.name);
         var members = [];
         this.animals.forEach(function(a) {
-            if (a.family === family) {
-                members.push(a);
+            if (a.family === family.name) {
+                var found = false;
+                family.members.forEach(function(m) {
+                    if (a.name === m.name)
+                        found = true;
+                });
+                if (found === false) {
+                    family.members.push(a);
+                }
             }
         });
-        console.log(members);
-        console.log(this.animalsOfFamily);
-        this.animalsOfFamily = members;
-    }
-
-    getAmount(family: GlobalFamily): int {
-        var amount = 0;
-        this.animals.forEach(function(a) {
-            if (a.family === family) {
-                amount++;
-            }
-        });
-        return amount;
     }
 
     addNew(): void {
         this.new = true;
         this.families.push(new GlobalFamily());
-        this.newElement = this.countElements()-1;
-        console.log(this.newElement);
+        this.newElement = this.countFamilies()-1;
+        this.families[this.newElement].members = [];
     }
 
-    countElements(): int {
+    countFamilies(): int {
         return this.families.length;
     }
 
