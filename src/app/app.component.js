@@ -7,14 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var core_1 = require("@angular/core");
 var global_family_1 = require("./global-family");
-var FAMILIES = [
-    { id: 1, name: 'Dogs', diet: 'Meat', noise: 'Guau',
-        ability: 'Playing with balls' },
-    { id: 2, name: 'Cats', diet: 'Milk', noise: 'Miau',
-        ability: 'Lazy in the couch all day' },
-    { id: 3, name: 'Birds', diet: 'Seed', noise: 'Sing',
-        ability: 'Sing' }
-];
 var AppComponent = (function () {
     function AppComponent() {
         this.new = false;
@@ -27,17 +19,15 @@ var AppComponent = (function () {
             { name: 'Birds', diet: 'Seed', noise: 'Sing',
                 ability: 'Sing', members: [] },
         ];
-        this.newFamily = -1;
         this.specificList = 'Specific List';
         this.animals = [
-            { id: '11', name: 'Bobby', age: 6, family: 'Dogs' },
-            { id: '12', name: 'Toby', age: 24, family: 'Birds' },
-            { id: '13', name: 'Speaker', age: 2, family: 'Birds' },
-            { id: '14', name: 'Zipper', age: 11, family: 'Cats' },
-            { id: '15', name: 'Walker', age: 8, family: 'Dogs' },
+            { id: 11, name: 'Bobby', age: 6, family: 'Dogs' },
+            { id: 12, name: 'Toby', age: 24, family: 'Birds' },
+            { id: 13, name: 'Speaker', age: 2, family: 'Birds' },
+            { id: 14, name: 'Zipper', age: 11, family: 'Cats' },
+            { id: 15, name: 'Walker', age: 8, family: 'Dogs' },
         ];
     }
-    ;
     AppComponent.prototype.showGlobalList = function (flag) {
         this.globalOrSpecific = flag;
     };

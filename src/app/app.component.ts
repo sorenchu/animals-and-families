@@ -1,16 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { GlobalFamily } from './global-family';
 import { Animal } from './animal';
-import {  Component, ChangeDetectionStrategy } from '@angular/core';
-
-const FAMILIES: GlobalFamily[] = [
-  {id: 1, name: 'Dogs', diet: 'Meat', noise: 'Guau',
-      ability: 'Playing with balls'},
-  {id: 2, name: 'Cats', diet: 'Milk', noise: 'Miau',
-      ability: 'Lazy in the couch all day'},
-  {id: 3, name: 'Birds', diet: 'Seed', noise: 'Sing',
-      ability: 'Sing'}
-];
 
 @Component({
   selector: 'my-app',
@@ -81,17 +71,18 @@ export class AppComponent  {
       {name: 'Birds', diet: 'Seed', noise: 'Sing',
           ability: 'Sing', members:[]},
     ];
-    newFamily: families[families.length-1];
     specificList = 'Specific List';
     animals: Animal[] = [
-      {id: '11', name: 'Bobby', age: 6, family: 'Dogs'},
-      {id: '12', name: 'Toby', age: 24, family: 'Birds'},
-      {id: '13', name: 'Speaker', age:2, family: 'Birds'},
-      {id: '14', name: 'Zipper', age: 11, family: 'Cats'},
-      {id: '15', name: 'Walker', age: 8, family: 'Dogs'},
+      {id: 11, name: 'Bobby', age: 6, family: 'Dogs'},
+      {id: 12, name: 'Toby', age: 24, family: 'Birds'},
+      {id: 13, name: 'Speaker', age:2, family: 'Birds'},
+      {id: 14, name: 'Zipper', age: 11, family: 'Cats'},
+      {id: 15, name: 'Walker', age: 8, family: 'Dogs'},
     ];
     selectedFamily: GlobalFamily;
     animalsOfFamily: Animal[];
+    globalOrSpecific: boolean;
+    newElement: number;
 
     showGlobalList(flag: boolean): void {
         this.globalOrSpecific = flag;
@@ -120,7 +111,7 @@ export class AppComponent  {
         this.families[this.newElement].members = [];
     }
 
-    countFamilies(): int {
+    countFamilies(): number {
         return this.families.length;
     }
 

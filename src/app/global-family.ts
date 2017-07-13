@@ -1,5 +1,6 @@
+import { Animal } from './animal';
+
 export class GlobalFamily {
-    id: number;
     name: string;
     diet: string;
     noise: string;
